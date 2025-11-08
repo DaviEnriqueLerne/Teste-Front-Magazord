@@ -3,4 +3,5 @@ export interface FilterModalProps {
   onClose: () => void;
   onApply: (selectedFilters: string[]) => void;
   filterOptions: string[];
+  selectedFilters: string[];
 }

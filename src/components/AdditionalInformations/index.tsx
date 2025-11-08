@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FaChevronDown, FaMapMarkerAlt } from "react-icons/fa";
 import { useUserStore } from "../../store/userStore";
 import { RowAdditionalInformation } from "../RowAdditionalInformations";
@@ -11,9 +11,10 @@ export function AdditionalInformations() {
   const itemsUserAdditionalInformationsToMap = useRef<(ArrayToMap | null)[]>([]);
 
   const [open, setOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const handleToggle = () => {
-    setOpen(!open);
+    if (!isDesktop) setOpen((prev) => !prev);
   };
 
   const haveAdditionalInformation: boolean = useMemo(() => {
@@ -29,18 +30,31 @@ export function AdditionalInformations() {
     return true;
   }, [user]);
 
+  useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth >= 744);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (isDesktop) setOpen(true);
+  }, [isDesktop]);
+
   return (
     haveAdditionalInformation &&
     user && (
-      <div className="max-w-sm mx-auto mt-6 font-sans">
-        <div className="flex justify-between items-center cursor-pointer select-none" onClick={handleToggle}>
-          <h2 className="text-blue-500 font-medium text-lg">Informações Adicionais</h2>
-          <FaChevronDown className={`text-blue-500 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
-        </div>
+      <div className="max-w-sm sm:max-w-md md:max-w-lg mx-auto font-sans">
+        {!isDesktop && (
+          <div className="flex flex-col items-center justify-center cursor-pointer select-none mb-3" onClick={handleToggle}>
+            <h2 className="text-blue-500 font-medium text-lg sm:text-xl">Informações Adicionais</h2>
+            <FaChevronDown className={`mt-1 text-blue-500 transition-transform duration-300 ${open ? "rotate-180" : ""}`} size={18} />
+          </div>
+        )}
         {open && (
-          <div className="mt-3 bg-gray-100 rounded-lg p-4 space-y-3">
+          <div className={` ${!isDesktop && `bg-gray-100 rounded-lg shadow-sm`} px-4 py-4 space-y-3`}>
             {itemsUserAdditionalInformationsToMap.current.map(
-              (item) => item?.title && <RowAdditionalInformation title={item.title} icon={item?.icon} />
+              (item, idx: number) => item?.title && <RowAdditionalInformation key={idx} title={item.title} icon={item.icon} />
             )}
           </div>
         )}

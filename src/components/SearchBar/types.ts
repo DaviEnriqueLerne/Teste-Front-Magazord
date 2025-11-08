@@ -1,3 +1,3 @@
 export interface SearchBarProps {
-  onSearch: (query: string) => void;
+  onSearch: (text: string, filters: { type: string; language: string }) => void;
 }

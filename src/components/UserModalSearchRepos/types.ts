@@ -4,5 +4,4 @@ export interface UserModalSearchReposProps {
   onSearch: (username: string) => void;
   isLoading: boolean;
   isError: boolean;
-  hasData: boolean;
 }

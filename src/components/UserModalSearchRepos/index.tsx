@@ -3,7 +3,7 @@ import { FaX } from "react-icons/fa6";
 import type { UserModalSearchReposProps } from "./types";
 import { FiAlertCircle, FiLoader } from "react-icons/fi";
 
-export function UserModalSearchRepos({ isOpen, onClose, onSearch, isLoading, isError, hasData }: UserModalSearchReposProps) {
+export function UserModalSearchRepos({ isOpen, onClose, onSearch, isLoading, isError }: UserModalSearchReposProps) {
   const [username, setUsername] = useState<string>("");
 
   const handleClear = () => {
@@ -13,7 +13,7 @@ export function UserModalSearchRepos({ isOpen, onClose, onSearch, isLoading, isE
   const handleSearch = () => {
     if (username.trim() !== "") {
       onSearch(username.trim());
-      if (hasData) onClose();
+      if (isLoading) onClose();
     }
   };
 
