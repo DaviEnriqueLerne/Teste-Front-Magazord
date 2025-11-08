@@ -32,15 +32,15 @@ export function AdditionalInformations() {
   return (
     haveAdditionalInformation &&
     user && (
-      <div className="max-w-sm mx-auto mt-6 font-sans">
-        <div className="flex justify-between items-center cursor-pointer select-none" onClick={handleToggle}>
-          <h2 className="text-blue-500 font-medium text-lg">Informações Adicionais</h2>
-          <FaChevronDown className={`text-blue-500 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+      <div className="max-w-sm sm:max-w-md md:max-w-lg mx-auto font-sans">
+        <div className="flex flex-col items-center justify-center cursor-pointer select-none" onClick={handleToggle}>
+          <h2 className="text-blue-500 font-medium text-lg sm:text-xl">Informações Adicionais</h2>
+          <FaChevronDown className={`mt-1 text-blue-500 transition-transform duration-300 ${open ? "rotate-180" : ""}`} size={18} />
         </div>
         {open && (
-          <div className="mt-3 bg-gray-100 rounded-lg p-4 space-y-3">
+          <div className="mt-3 bg-gray-100 rounded-lg shadow-sm px-4 py-4 space-y-3">
             {itemsUserAdditionalInformationsToMap.current.map(
-              (item) => item?.title && <RowAdditionalInformation title={item.title} icon={item?.icon} />
+              (item, idx: number) => item?.title && <RowAdditionalInformation key={idx} title={item.title} icon={item.icon} />
             )}
           </div>
         )}
