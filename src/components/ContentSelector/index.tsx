@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import type { ContentSelector } from "./types";
 import { LuBookMarked } from "react-icons/lu";
 import { FaStar } from "react-icons/fa";
@@ -6,22 +6,29 @@ import { SearchBar } from "../SearchBar";
 import { ItemRow } from "../ItemRow";
 import type { Repo } from "../../hooks/useFetchRepositories/types";
 import { repoStore } from "../../store/reposStore";
+import { useFilteredRepos } from "../../hooks/useFilterRepos";
 
 export function ContentSelector() {
   const repositories = repoStore((state) => state.repo);
   const starred = repoStore((state) => state.starred);
 
   const [activeTab, setActiveTab] = useState<"repositories" | "starred">("repositories");
-  const [search, setSearch] = useState("");
   const [repoSelected, setRepoSelected] = useState<Repo[]>(repositories);
+  const [search, setSearch] = useState({
+    text: "",
+    type: "All",
+    language: "All",
+  });
 
   const handleChange = (tab: "repositories" | "starred") => {
     setActiveTab(tab);
   };
 
-  const filteredRepos = useMemo(() => {
-    return repoSelected.filter((item) => item.full_name.toLowerCase().includes(search.toLowerCase()));
-  }, [repoSelected, search]);
+  const handleSearch = (text: string, filters: { type: string; language: string }) => {
+    setSearch({ text, ...filters });
+  };
+
+  const filteredRepos = useFilteredRepos(repoSelected, search);
 
   useEffect(() => {
     function SelectedContent() {
@@ -63,7 +70,7 @@ export function ContentSelector() {
       </div>
       <div className="flex justify-center w-full mt-3">
         <div className="w-full max-w-lg">
-          <SearchBar onSearch={setSearch} />
+          <SearchBar onSearch={handleSearch} />
           {filteredRepos.map((repo, index) => (
             <>
               <ItemRow
