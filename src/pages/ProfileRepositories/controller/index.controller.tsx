@@ -16,7 +16,6 @@ export function ProfileRepositoriesController() {
 
   const isLoading = isLoadingUser && isLoadingStarred && isLoadingRepos;
   const isError = isErrorUser || isErrorStarred || isErrorDataQuery;
-  const hasData = userData !== null || userStarred !== null || userRepos !== null;
 
   const setUserStore = useUserStore((state) => state.setUser);
   const setReposStore = repoStore((state) => state.setRepo);
@@ -40,14 +39,7 @@ export function ProfileRepositoriesController() {
           Change User
         </button>
       )}
-      <UserModalSearchRepos
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        onSearch={setUser}
-        isLoading={isLoading}
-        isError={isError}
-        hasData={hasData}
-      />
+      <UserModalSearchRepos isOpen={open} onClose={() => setOpen(false)} onSearch={setUser} isLoading={isLoading} isError={isError} />
       <ProfileRepositoriesView />
     </>
   );
