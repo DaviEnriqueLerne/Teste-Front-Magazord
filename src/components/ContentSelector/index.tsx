@@ -37,7 +37,7 @@ export function ContentSelector() {
 
   return (
     <>
-      <div className="flex justify-center border-b border-gray-200 mt-6">
+      <div className="flex justify-center mt-6">
         <div className="flex items-center gap-8">
           <button
             onClick={() => handleChange("repositories")}
@@ -61,24 +61,26 @@ export function ContentSelector() {
           </button>
         </div>
       </div>
-      <div className="mt-4 mb-2 px-4">
-        <SearchBar onSearch={setSearch} />
+      <div className="flex justify-center w-full mt-3">
+        <div className="w-full max-w-lg">
+          <SearchBar onSearch={setSearch} />
+          {filteredRepos.map((repo, index) => (
+            <>
+              <ItemRow
+                key={repo.id}
+                description={repo.description}
+                forks={repo.forks_count}
+                stars={repo.stargazers_count}
+                language={repo.language}
+                title={repo.full_name}
+                urlRedirectRepo={repo.html_url}
+                activeTab={activeTab}
+              />
+              {index < filteredRepos.length - 1 && <div className="border-t border-gray-200 my-4"></div>}
+            </>
+          ))}
+        </div>
       </div>
-      {filteredRepos.map((repo, index) => (
-        <>
-          <ItemRow
-            key={repo.id}
-            description={repo.description}
-            forks={repo.forks_count}
-            stars={repo.stargazers_count}
-            language={repo.language}
-            title={repo.full_name}
-            urlRedirectRepo={repo.html_url}
-            activeTab={activeTab}
-          />
-          {index < filteredRepos.length - 1 && <div className="border-t border-gray-200 my-4"></div>}
-        </>
-      ))}
     </>
   );
 }

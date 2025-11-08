@@ -14,10 +14,17 @@ export function SearchBar({ onSearch }: SearchBarProps) {
     setIsSearching(true);
   };
 
+  const handleBlur = () => {
+    setTimeout(() => {
+      setIsSearching(false);
+      setQuery("");
+    }, 150);
+  };
+
   return (
     <div className="flex items-center bg-gray-50 border border-gray-200 rounded-full px-3 py-2 w-full max-w-md shadow-sm">
       {!isSearching ? (
-        <div className="flex items-center gap-3 w-full">
+        <div className="flex items-center gap-3 w-full h-10">
           <FilterButton name="Type" filtersOptions={FILTER_TYPE_OPTIONS} />
           <FilterButton name="Language" filtersOptions={FILTER_LANGUAGE_OPTIONS} />
 
@@ -27,7 +34,7 @@ export function SearchBar({ onSearch }: SearchBarProps) {
         </div>
       ) : (
         <div className="flex items-center w-full">
-          <FaSearch className="w-5 h-5 text-blue-500 mr-2" />
+          <FaSearch className="w-5 h-10 text-blue-500 mr-2" />
           <input
             autoFocus
             type="text"
@@ -37,6 +44,7 @@ export function SearchBar({ onSearch }: SearchBarProps) {
               setQuery(e.target.value);
               onSearch(e.target.value);
             }}
+            onBlur={handleBlur}
             className="bg-transparent w-full outline-none text-gray-700 placeholder-gray-400"
           />
         </div>

@@ -35,7 +35,7 @@ export function ProfileRepositoriesController() {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-full font-medium shadow-sm hover:opacity-90 transition"
+          className="fixed bottom-4 right-4 bg-linear-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-full font-medium shadow-lg hover:opacity-90 transition"
         >
           Change User
         </button>

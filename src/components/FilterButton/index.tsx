@@ -11,7 +11,7 @@ export function FilterButton({ name, filtersOptions }: FilterButtonProps) {
   return (
     <>
       <button
-        className="flex items-center gap-1 bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-medium px-4 py-1.5 rounded-full shadow-sm hover:opacity-90 transition"
+        className="flex items-center gap-1 bg-linear-to-r from-blue-600 to-blue-500 text-white text-sm font-medium px-4 py-1.5 rounded-full shadow-sm hover:opacity-90 transition"
         onClick={() => setOpenFilterModal(true)}
       >
         <FaChevronDown className="w-4 h-4" />
