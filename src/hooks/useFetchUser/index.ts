@@ -7,7 +7,7 @@ export async function fetchUser(username: string): Promise<User> {
     const response = await fetch(`https://api.github.com/users/${username}`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}`,
+        Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
       },
     });
 
