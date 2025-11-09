@@ -1,23 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaX } from "react-icons/fa6";
 import type { UserModalSearchReposProps } from "./types";
 import { FiAlertCircle, FiLoader } from "react-icons/fi";
 
 export function UserModalSearchRepos({ isOpen, onClose, onSearch, isLoading, isError }: UserModalSearchReposProps) {
   const [username, setUsername] = useState<string>("");
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleClear = () => {
     setUsername("");
   };
 
-  console.log(isLoading);
-
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (username.trim() !== "") {
+      setHasSearched(true);
       onSearch(username.trim());
-      if (isLoading) onClose();
     }
   };
+
+  useEffect(() => {
+    if (hasSearched && !isLoading && !isError) {
+      onClose();
+      setUsername("");
+      setHasSearched(false);
+    }
+  }, [isLoading, isError, hasSearched, onClose]);
 
   if (!isOpen) return null;
 
@@ -42,29 +49,27 @@ export function UserModalSearchRepos({ isOpen, onClose, onSearch, isLoading, isE
             {"User not found or an error occurred. Please try again."}
           </div>
         )}
-        <div className="flex justify-between">
-          {isLoading ? (
-            <>
-              <FiLoader className="w-4 h-4 mr-2 animate-spin" />
-              Searching...
-            </>
-          ) : (
-            <>
-              <button
-                onClick={handleClear}
-                className="flex-1 mr-2 py-2 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 transition text-sm font-medium"
-              >
-                Clear
-              </button>
-              <button
-                onClick={handleSearch}
-                className="flex-1 ml-2 py-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium hover:opacity-90 transition text-sm"
-              >
-                Search
-              </button>
-            </>
-          )}
-        </div>
+        {isLoading ? (
+          <div className="flex justify-center items-center">
+            <FiLoader className="w-4 h-4 mr-2 animate-spin" />
+            Searching...
+          </div>
+        ) : (
+          <div className="flex justify-between">
+            <button
+              onClick={handleClear}
+              className="flex-1 mr-2 py-2 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 transition text-sm font-medium"
+            >
+              Clear
+            </button>
+            <button
+              onClick={handleSearch}
+              className="flex-1 ml-2 py-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium hover:opacity-90 transition text-sm"
+            >
+              Search
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

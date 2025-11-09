@@ -70,22 +70,31 @@ export function ContentSelector() {
       </div>
       <div className="flex justify-center w-full mt-3">
         <div className="w-full max-w-lg">
-          <SearchBar onSearch={handleSearch} />
-          {filteredRepos.map((repo, index) => (
+          {filteredRepos.length > 0 ? (
             <>
-              <ItemRow
-                key={repo.id}
-                description={repo.description}
-                forks={repo.forks_count}
-                stars={repo.stargazers_count}
-                language={repo.language}
-                title={repo.full_name}
-                urlRedirectRepo={repo.html_url}
-                activeTab={activeTab}
-              />
-              {index < filteredRepos.length - 1 && <div className="border-t border-gray-200 my-4"></div>}
+              <SearchBar onSearch={handleSearch} />
+              {filteredRepos.map((repo, index) => (
+                <>
+                  <ItemRow
+                    key={repo.id}
+                    description={repo.description}
+                    forks={repo.forks_count}
+                    stars={repo.stargazers_count}
+                    language={repo.language}
+                    title={repo.full_name}
+                    urlRedirectRepo={repo.html_url}
+                    activeTab={activeTab}
+                  />
+                  {index < filteredRepos.length - 1 && <div className="border-t border-gray-200 my-4"></div>}
+                </>
+              ))}
             </>
-          ))}
+          ) : (
+            <div className="flex flex-col items-center justify-center py-10 text-gray-400">
+              <p className="text-sm font-medium">Nenhum repositório encontrado</p>
+              <p className="text-xs font-medium text-gray-500 mt-1">Tente pesquisar outro usuário ou atualizar a lista.</p>
+            </div>
+          )}
         </div>
       </div>
     </>
