@@ -34,7 +34,7 @@ Para rodar o projeto localmente:
 
 ```bash
 # Clone o repositório
-git clone <URL_DO_REPOSITORIO>
+git clone https://github.com/DaviEnriqueLerne/Teste-Front-Magazord.git
 
 # Acesse o diretório do projeto
 cd nome-do-projeto
