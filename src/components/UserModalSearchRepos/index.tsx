@@ -10,6 +10,8 @@ export function UserModalSearchRepos({ isOpen, onClose, onSearch, isLoading, isE
     setUsername("");
   };
 
+  console.log(isLoading);
+
   const handleSearch = () => {
     if (username.trim() !== "") {
       onSearch(username.trim());
