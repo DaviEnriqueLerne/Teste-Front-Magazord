@@ -6,7 +6,7 @@ export default defineConfig(() => {
   return {
     define: {
       VITE_GITHUB_TOKEN: process.env.VITE_GITHUB_TOKEN,
-      plugins: [react(), tailwindcss()],
     },
+    plugins: [react(), tailwindcss()],
   };
 });
