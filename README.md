@@ -37,7 +37,7 @@ Para rodar o projeto localmente:
 git clone https://github.com/DaviEnriqueLerne/Teste-Front-Magazord.git
 
 # Acesse o diretório do projeto
-cd nome-do-projeto
+cd Teste-Front-Magazord
 
 # Instale as dependências
 npm install
